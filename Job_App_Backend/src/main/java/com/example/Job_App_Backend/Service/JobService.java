@@ -20,6 +20,13 @@ public class JobService {
         return jobRepository.findById(id);
     }
 
+    public boolean addJob(Job job){
+        jobRepository.save(job);
+        return true;
+    }
+
+
+
 
 
 }
