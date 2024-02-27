@@ -17,7 +17,8 @@ public class JobService {
     }
 
     public Job getJobById(Long id){
-        return jobRepository.findById(id);
+        Optional<Job> b=jobRepository.findById(id);
+        return b.orElse(null);
     }
 
     public boolean addJob(Job job){
@@ -26,7 +27,32 @@ public class JobService {
     }
 
 
+    public boolean deleteJob(long id){
 
+        Optional<Job> b= jobRepository.findById(id);
 
+        if(b.isPresent()) {
+            jobRepository.deleteById(id);
+            return true;
+        }
+        else
+            return false;
+    }
 
+    public boolean updateJob(long id,Job job){
+
+      Optional<Job> b= jobRepository.findById(id);
+
+       if(b.isPresent()){
+           Job curJob=b.get();
+           curJob.setDescription(job.getDescription());
+           curJob.setLocation(job.getLocation());
+           curJob.setTitle(job.getTitle());
+           curJob.setMaxSalary(job.getMaxSalary());
+           curJob.setMinSalary(job.getMinSalary());
+           jobRepository.save(curJob);
+           return true;
+       }else
+        return false;
+    }
 }
