@@ -3,13 +3,11 @@ package com.example.Job_App_Backend.Controller;
 import com.example.Job_App_Backend.Model.Company;
 import com.example.Job_App_Backend.Repsoitroy.CompanyRepository;
 import com.example.Job_App_Backend.Service.CompanyService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +32,37 @@ public class CompanyController {
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<String> addCompany(@RequestBody Company company){
+        boolean v=companyService.addCompany(company);
+
+        if(v)
+            return new ResponseEntity<>("Company added successfully",HttpStatus.OK);
+        else
+            return new ResponseEntity<>("Failed to added the company to the database",HttpStatus.NOT_FOUND);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCompany(@PathVariable Long id){
+         boolean b=companyService.deleteCompany(id);
+
+         if(b)
+             return new ResponseEntity<>("Company deleted successfully",HttpStatus.OK);
+         else
+             return new ResponseEntity<>("Failed to delete the Company",HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateCompany(@PathVariable Long id,@RequestBody Company company){
+        boolean b=companyService.updateCompany(id,company);
+
+        if(b)
+            return new ResponseEntity<>("Successfully updated the Company",HttpStatus.OK);
+        else
+            return new ResponseEntity<>("Failed to update the company",HttpStatus.NOT_FOUND);
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.Job_App_Backend.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,7 @@ public class Job {
     private String maxSalary;
     private String minSalary;
     private String location;
+    @OneToOne
+    private Company company;
 
 }

@@ -23,5 +23,32 @@ public class CompanyService {
         return company.orElse(null);
     }
 
+    public boolean addCompany(Company company){
+        companyRepository.save(company);
+        return true;
+    }
+
+    public boolean deleteCompany(Long id){
+        Optional<Company> company=companyRepository.findById(id);
+
+        if(company.isPresent()){
+            companyRepository.deleteById(id);
+            return true;
+        }else
+            return false;
+    }
+
+    public boolean updateCompany(Long id,Company company){
+        Optional<Company> c=companyRepository.findById(id);
+
+        if(c.isPresent()){
+            c.get().setDescription(company.getDescription());
+            c.get().setName(company.getName());
+
+            return true;
+        }else
+            return false;
+
+    }
 
 }
