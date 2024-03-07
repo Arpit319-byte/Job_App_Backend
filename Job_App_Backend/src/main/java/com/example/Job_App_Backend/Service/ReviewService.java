@@ -14,41 +14,41 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public List<Review> getAllReview(){
-        return reviewRepository.findAll();
+    public List<Review> getAllReview(Long id) {
+        return reviewRepository.findByCompanyId(id);
     }
 
-    public Review getReviewById(Long id){
-        Optional<Review> review= reviewRepository.findById(id);
+    public Review getReviewById(Long id) {
+        Optional<Review> review = reviewRepository.findById(id);
 
         return review.orElse(null);
     }
 
-    public Boolean addReview(Review review){
-           reviewRepository.save(review);
-           return true;
+    public Boolean addReview(Review review) {
+        reviewRepository.save(review);
+        return true;
     }
 
-    public Boolean updateReview(Long id, Review review){
-        Optional<Review> r =reviewRepository.findById(id);
+    public Boolean updateReview(Long id, Review review) {
+        Optional<Review> r = reviewRepository.findById(id);
 
-        if(r.isPresent()){
+        if (r.isPresent()) {
             r.get().setDescription(review.getDescription());
             r.get().setTitle(review.getTitle());
             r.get().setRating(review.getRating());
             reviewRepository.save(r.get());
             return true;
-        }else
+        } else
             return false;
     }
 
-    public Boolean deleteReview(Long id){
-        Optional<Review> r=reviewRepository.findById(id);
+    public Boolean deleteReview(Long id) {
+        Optional<Review> r = reviewRepository.findById(id);
 
-        if(r.isPresent()){
+        if (r.isPresent()) {
             reviewRepository.deleteById(id);
             return true;
-        }else
+        } else
             return false;
     }
 }

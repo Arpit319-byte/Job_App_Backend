@@ -14,47 +14,46 @@ public class JobService {
     @Autowired
     private JobRepository jobRepository;
 
-    public List<Job> getAllJobs(){
+    public List<Job> getAllJobs() {
         return jobRepository.findAll();
     }
 
-    public Job getJobById(Long id){
-        Optional<Job> b=jobRepository.findById(id);
+    public Job getJobById(Long id) {
+        Optional<Job> b = jobRepository.findById(id);
         return b.orElse(null);
     }
 
-    public boolean addJob(Job job){
+    public boolean addJob(Job job) {
         jobRepository.save(job);
         return true;
     }
 
 
-    public boolean deleteJob(long id){
+    public boolean deleteJob(long id) {
 
-        Optional<Job> b= jobRepository.findById(id);
+        Optional<Job> b = jobRepository.findById(id);
 
-        if(b.isPresent()) {
+        if (b.isPresent()) {
             jobRepository.deleteById(id);
             return true;
-        }
-        else
+        } else
             return false;
     }
 
-    public boolean updateJob(long id,Job job){
+    public boolean updateJob(long id, Job job) {
 
-      Optional<Job> b= jobRepository.findById(id);
+        Optional<Job> b = jobRepository.findById(id);
 
-       if(b.isPresent()){
-           Job curJob=b.get();
-           curJob.setDescription(job.getDescription());
-           curJob.setLocation(job.getLocation());
-           curJob.setTitle(job.getTitle());
-           curJob.setMaxSalary(job.getMaxSalary());
-           curJob.setMinSalary(job.getMinSalary());
-           jobRepository.save(curJob);
-           return true;
-       }else
-        return false;
+        if (b.isPresent()) {
+            Job curJob = b.get();
+            curJob.setDescription(job.getDescription());
+            curJob.setLocation(job.getLocation());
+            curJob.setTitle(job.getTitle());
+            curJob.setMaxSalary(job.getMaxSalary());
+            curJob.setMinSalary(job.getMinSalary());
+            jobRepository.save(curJob);
+            return true;
+        } else
+            return false;
     }
 }
